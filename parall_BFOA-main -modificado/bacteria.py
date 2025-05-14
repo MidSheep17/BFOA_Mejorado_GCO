@@ -239,45 +239,45 @@ class bacteria():
                 bacterTmp = self.realiza_mutacion_mejorada(bacterTmp)
             poblacion[i] = tuple(bacterTmp)
 
-def realiza_mutacion_mejorada(self, bacterTmp):
-    seq_idx = random.randint(0, len(bacterTmp)-1)
-    secuencia = list(bacterTmp[seq_idx])
-    
-    # Nuevos tipos de mutación
-    tipo = random.choice(["insertar_gap", "mover_gap", "intercambiar", "bloque_gap", "shuffle_local"])
-    
-    if tipo == "insertar_gap":
-        pos = random.randint(0, len(secuencia))
-        secuencia.insert(pos, "-")
-    
-    elif tipo == "mover_gap":
-        gaps = [i for i, c in enumerate(secuencia) if c == "-"]
-        if gaps:
-            idx = random.choice(gaps)
-            secuencia.pop(idx)
-            new_idx = random.randint(0, len(secuencia))
-            secuencia.insert(new_idx, "-")
-    
-    elif tipo == "intercambiar":
-        if len(secuencia) >= 2:
-            i, j = random.sample(range(len(secuencia)), 2)
-            secuencia[i], secuencia[j] = secuencia[j], secuencia[i]
-    
-    elif tipo == "bloque_gap":
-        # Insertar bloque de varios gaps
-        num_gaps = random.randint(1, 3)
-        pos = random.randint(0, len(secuencia))
-        for _ in range(num_gaps):
+    def realiza_mutacion_mejorada(self, bacterTmp):
+        seq_idx = random.randint(0, len(bacterTmp)-1)
+        secuencia = list(bacterTmp[seq_idx])
+        
+        # Nuevos tipos de mutación
+        tipo = random.choice(["insertar_gap", "mover_gap", "intercambiar", "bloque_gap", "shuffle_local"])
+        
+        if tipo == "insertar_gap":
+            pos = random.randint(0, len(secuencia))
             secuencia.insert(pos, "-")
-    
-    elif tipo == "shuffle_local":
-        # Mezclar una pequeña región de la secuencia
-        if len(secuencia) >= 3:
-            start = random.randint(0, len(secuencia)-3)
-            end = start + random.randint(2, min(5, len(secuencia)-start))
-            region = secuencia[start:end]
-            random.shuffle(region)
-            secuencia[start:end] = region
-    
-    bacterTmp[seq_idx] = secuencia
-    return bacterTmp
+        
+        elif tipo == "mover_gap":
+            gaps = [i for i, c in enumerate(secuencia) if c == "-"]
+            if gaps:
+                idx = random.choice(gaps)
+                secuencia.pop(idx)
+                new_idx = random.randint(0, len(secuencia))
+                secuencia.insert(new_idx, "-")
+        
+        elif tipo == "intercambiar":
+            if len(secuencia) >= 2:
+                i, j = random.sample(range(len(secuencia)), 2)
+                secuencia[i], secuencia[j] = secuencia[j], secuencia[i]
+        
+        elif tipo == "bloque_gap":
+            # Insertar bloque de varios gaps
+            num_gaps = random.randint(1, 3)
+            pos = random.randint(0, len(secuencia))
+            for _ in range(num_gaps):
+                secuencia.insert(pos, "-")
+        
+        elif tipo == "shuffle_local":
+            # Mezclar una pequeña región de la secuencia
+            if len(secuencia) >= 3:
+                start = random.randint(0, len(secuencia)-3)
+                end = start + random.randint(2, min(5, len(secuencia)-start))
+                region = secuencia[start:end]
+                random.shuffle(region)
+                secuencia[start:end] = region
+        
+        bacterTmp[seq_idx] = secuencia
+        return bacterTmp
