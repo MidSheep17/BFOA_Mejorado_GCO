@@ -85,6 +85,7 @@ if __name__ == "__main__":
             veryBest[1] = bestFitness
             veryBest[2] = copy.deepcopy(poblacion[bestIdx])
         operadorBacterial.replaceWorst(poblacion, veryBest[0])
+        operadorBacterial.mutacion_adaptativa(poblacion)
         operadorBacterial.resetListas(numeroDeBacterias)
 
     #print("Very Best: ", veryBest)
